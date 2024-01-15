@@ -776,13 +776,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player:
   - {fileID: 2233528875635059601, guid: 22ceba04199a96f45b3adb9eed01d233, type: 3}
+  - {fileID: 2233528875635059601, guid: 32fff394510ab294389156401bbe5fd2, type: 3}
   - {fileID: 2233528875635059601, guid: 2e48b37c079893f4e9d1492d0814d4ac, type: 3}
-  - {fileID: 2233528875635059601, guid: 22ceba04199a96f45b3adb9eed01d233, type: 3}
   enemy:
-  - {fileID: 2233528875635059601, guid: 2e48b37c079893f4e9d1492d0814d4ac, type: 3}
-  - {fileID: 2233528875635059601, guid: 2e48b37c079893f4e9d1492d0814d4ac, type: 3}
-  - {fileID: 2233528875635059601, guid: 22ceba04199a96f45b3adb9eed01d233, type: 3}
+  - {fileID: 2233528875635059601, guid: 32fff394510ab294389156401bbe5fd2, type: 3}
+  - {fileID: 2233528875635059601, guid: 32fff394510ab294389156401bbe5fd2, type: 3}
+  - {fileID: 2233528875635059601, guid: 32fff394510ab294389156401bbe5fd2, type: 3}
   state: 0
+  specials: 0
   playerSpawn:
   - {fileID: 257410876}
   - {fileID: 1004364378}

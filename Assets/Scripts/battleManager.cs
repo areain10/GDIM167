@@ -13,7 +13,7 @@ public class battleManager : MonoBehaviour
     public GameObject[] enemy;
 
     public battleState state;
-
+    public specialTypes specials;
     public Transform[] playerSpawn;
     public Transform[] enemySpawn;
     List<Character> enemyCharacter = new List<Character>();
@@ -73,7 +73,7 @@ public class battleManager : MonoBehaviour
         state = battleState.PLAYERTURN;
                 PlayerTurn();
 
-
+        
     }
 
     void targettingCamera()
@@ -172,7 +172,11 @@ public class battleManager : MonoBehaviour
                 }
                 StartCoroutine(PlayerAttack(1, target));break;
 
-            case 2: team1Energy = manageEnergy(team1Energy, -1); StartCoroutine(PlayerAttack(2, target)); break;
+            case 2: 
+                team1Energy = manageEnergy(team1Energy, -1); 
+          
+                StartCoroutine(PlayerAttack(2, target)); 
+                break;
 
         }
     }
@@ -192,6 +196,7 @@ public class battleManager : MonoBehaviour
         }
         state = battleState.PLAYERTURN;
         currentCharacter = 0;
+        removeAllBuffsFromPlayer();
         PlayerTurn();
     }
 
@@ -199,12 +204,41 @@ public class battleManager : MonoBehaviour
     {
         targettingUI.gameObject.SetActive(false);
         bool isdead = false;
-        battleStatusText.text = "Player attacks " + attack.ToString();
-        Debug.Log("PLAYER ATTACKS ");
+        
         switch (attack)
         {
-            case 1: isdead = enemyCharacter[enemy].takeDamage(playerCharacter[currentCharacter].damage);break;
-                case 2: isdead = enemyCharacter[enemy].takeDamage(playerCharacter[currentCharacter].damage);break;
+            case 1: isdead = enemyCharacter[enemy].takeDamage(playerCharacter[currentCharacter].damage); battleStatusText.text = "Player attacks " + attack.ToString(); break;
+                case 2:
+                switch (playerCharacter[currentCharacter].GetSpecialTypes())
+                {
+                    case specialTypes.DAMAGE:
+                        isdead = enemyCharacter[enemy].takeDamage(playerCharacter[currentCharacter].gameObject.GetComponent<Warrior>().specialDmg);
+                        battleStatusText.text = playerCharacter[currentCharacter].name.ToString() + " Special Attacks " + enemyCharacter[enemy].name.ToString();
+                        break;
+                    case specialTypes.DEBUFFDEFENSE:
+                        enemyCharacter[enemy].debuffDefence(playerCharacter[currentCharacter].gameObject.GetComponent<Debuffer>().debuffMultiplier);
+                        battleStatusText.text = playerCharacter[currentCharacter].name.ToString()+" debuff " + enemyCharacter[enemy].name.ToString();
+                        break;
+                    case specialTypes.HEAL:
+                        float lowestHealth = 9999;
+                        int index = 0;
+                        for (int i = 0;i<playerCharacter.Count;i++)
+                        {
+                            float healthratio = playerCharacter[i].health / playerCharacter[i].maxHealth;
+                            if (healthratio < lowestHealth)
+                            {
+                                
+                                lowestHealth = healthratio;
+                                Debug.Log(lowestHealth);
+                                index = i;
+                            }
+                        }
+                        playerCharacter[index].heal(playerCharacter[currentCharacter].gameObject.GetComponent<Healer>().Healing);
+                        battleStatusText.text = playerCharacter[currentCharacter].name.ToString() + " heals " + playerCharacter[index].ToString();
+                        break;
+                }
+                break;
+                
         }
         Debug.Log(isdead);
         UpdateSliders();
@@ -244,6 +278,13 @@ public class battleManager : MonoBehaviour
         Application.Quit();
     }
 
+    public void removeAllBuffsFromPlayer()
+    {
+        foreach(Character character in playerCharacter)
+        {
+            character.removeBuffsandDebuffs();
+        }
+    }
     public int manageEnergy(int energy, int energyChange)
     {
         int temp = energy + energyChange;

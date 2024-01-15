@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum specialTypes { DAMAGE,DEBUFFDMG,BUFFDMG,DEBUFFDEFENSE,BUFFDEFENSE,HEAL}
 public class Character : MonoBehaviour
 {
     // Start is called before the first frame update
-    
+    public specialTypes specialType;
     public int unitLevel;
-    public int damage;
     public int baseDamage;
+    public int damage;
     public int maxHealth;
     public int health;
-    public int baseDefense;
-    public int defense;
+    public float baseDefense;
+    public float defense;
     public Slider healthSlider;
+
 
     private void Start()
     {
@@ -23,9 +25,14 @@ public class Character : MonoBehaviour
         damage = baseDamage;
 
     }
+    
+    public specialTypes GetSpecialTypes()
+    {
+        return specialType;
+    }
     public bool takeDamage(int dmg)
     {
-        health -= dmg*defense;
+        health -= Mathf.RoundToInt(dmg*defense);
         healthSlider.value = health;
 
         if (health <= 0 )
@@ -38,9 +45,12 @@ public class Character : MonoBehaviour
     public void heal(int healing)
     {
         health += healing;
+        
         if (health >= maxHealth)
         {
             health = maxHealth;
+            Debug.Log(health);
+            healthSlider.value = health;
         }
         healthSlider.value = health;
     }
@@ -50,9 +60,13 @@ public class Character : MonoBehaviour
         damage = baseDamage;
         defense = baseDefense;
     }
-    public void buffDmg(int multiplier)
+    public virtual void buffDmg(float multiplier)
     {
-        damage = multiplier*damage;
+        damage = Mathf.RoundToInt(multiplier*damage);
+    }
+    public virtual void debuffDefence(float multiplier)
+    {
+        defense = multiplier*defense;
     }
    
 }

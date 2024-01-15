@@ -387,6 +387,9 @@
 -analyzer:"C:/Program Files/Unity 2023.2.4f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll"
 "Assets/Scripts/battleManager.cs"
 "Assets/Scripts/Character.cs"
+"Assets/Scripts/Debuffer.cs"
+"Assets/Scripts/Healer.cs"
+"Assets/Scripts/Warrior.cs"
 -langversion:9.0
 
 /deterministic

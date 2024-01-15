@@ -63,6 +63,9 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Character.cs" />
     <Compile Include="Assets\Scripts\battleManager.cs" />
+    <Compile Include="Assets\Scripts\Debuffer.cs" />
+    <Compile Include="Assets\Scripts\Healer.cs" />
+    <Compile Include="Assets\Scripts\Warrior.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
