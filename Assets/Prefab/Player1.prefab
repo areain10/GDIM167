@@ -123,9 +123,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitLevel: 1
   damage: 5
-  specialDmg: 20
+  baseDamage: 30
   maxHealth: 100
   health: 100
+  baseDefense: 1
+  defense: 1
   healthSlider: {fileID: 2219052680242737000}
 --- !u!1 &5116300564698700713
 GameObject:

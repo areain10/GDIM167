@@ -204,7 +204,7 @@ public class battleManager : MonoBehaviour
         switch (attack)
         {
             case 1: isdead = enemyCharacter[enemy].takeDamage(playerCharacter[currentCharacter].damage);break;
-                case 2: isdead = enemyCharacter[enemy].takeDamage(playerCharacter[currentCharacter].specialDmg);break;
+                case 2: isdead = enemyCharacter[enemy].takeDamage(playerCharacter[currentCharacter].damage);break;
         }
         Debug.Log(isdead);
         UpdateSliders();
