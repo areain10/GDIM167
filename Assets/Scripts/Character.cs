@@ -18,6 +18,7 @@ public class Character : MonoBehaviour
     public Slider healthSlider;
 
 
+    
     private void Start()
     {
         healthSlider.maxValue = maxHealth;
@@ -32,9 +33,10 @@ public class Character : MonoBehaviour
     }
     public bool takeDamage(int dmg)
     {
-        health -= Mathf.RoundToInt(dmg*defense);
+        int dmgtakenRounded = Mathf.RoundToInt(dmg * defense);
+        health -= dmgtakenRounded;
+        DmgPopup.Create(transform.position, dmgtakenRounded);
         healthSlider.value = health;
-        DmgPopup.Create(Vector3.zero, dmg);
 
         if (health <= 0 )
         {
@@ -64,6 +66,7 @@ public class Character : MonoBehaviour
     public virtual void buffDmg(float multiplier)
     {
         damage = Mathf.RoundToInt(multiplier*damage);
+        
     }
     public virtual void debuffDefence(float multiplier)
     {

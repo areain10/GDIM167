@@ -11,7 +11,7 @@ public class DmgPopup : MonoBehaviour
         Transform damagePopupTransform = Instantiate(GameAssets.i.DmgPopup, position, Quaternion.identity);
 
         DmgPopup damagePopup = damagePopupTransform.GetComponent<DmgPopup>();
-        damagePopup.Setup(dmgAmt);
+        damagePopup.Setup(dmgAmt,position);
 
         return damagePopup;
     }
@@ -24,16 +24,17 @@ public class DmgPopup : MonoBehaviour
     {
         textMesh = GetComponent<TextMeshPro>();
     }
-    public void Setup(int dmgAmt)
+    public void Setup(int dmgAmt,Vector3 position)
     {
         textMesh.SetText(dmgAmt.ToString());
         textColor = textMesh.color;
         fadeOutTimer = 0.5f;
+        transform.position = position;
     }
 
     private void Update()
     {
-        float moveYSpeed = 5f;
+        float moveYSpeed = 1f;
         transform.position += new Vector3(0, moveYSpeed) * Time.deltaTime;
 
         fadeOutTimer -= Time.deltaTime;
