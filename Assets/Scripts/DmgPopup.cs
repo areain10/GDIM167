@@ -6,12 +6,12 @@ using UnityEngine.TextCore.Text;
 
 public class DmgPopup : MonoBehaviour
 {
-    public static DmgPopup Create(Vector3 position, int dmgAmt)
+    public static DmgPopup Create(Vector3 position, int dmgAmt, specialTypes special)
     {
         Transform damagePopupTransform = Instantiate(GameAssets.i.DmgPopup, position, Quaternion.identity);
 
         DmgPopup damagePopup = damagePopupTransform.GetComponent<DmgPopup>();
-        damagePopup.Setup(dmgAmt,position);
+        damagePopup.Setup(dmgAmt,position,special);
 
         return damagePopup;
     }
@@ -24,10 +24,16 @@ public class DmgPopup : MonoBehaviour
     {
         textMesh = GetComponent<TextMeshPro>();
     }
-    public void Setup(int dmgAmt,Vector3 position)
+    public void Setup(int dmgAmt,Vector3 position, specialTypes special)
     {
         textMesh.SetText(dmgAmt.ToString());
-        textColor = textMesh.color;
+
+        switch (special)
+        {
+            case specialTypes.DAMAGE: textColor = Color.red; break;
+                case specialTypes.HEAL: textColor = Color.green; break;
+        }
+        textMesh.color = textColor;
         fadeOutTimer = 0.5f;
         transform.position = position;
     }

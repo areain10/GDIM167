@@ -233,6 +233,7 @@ public class battleManager : MonoBehaviour
                                 index = i;
                             }
                         }
+                        mainCamera.transform.position = playerSpawn[index].transform.GetChild(0).transform.position;
                         playerCharacter[index].heal(playerCharacter[currentCharacter].gameObject.GetComponent<Healer>().Healing);
                         battleStatusText.text = playerCharacter[currentCharacter].name.ToString() + " heals " + playerCharacter[index].ToString();
                         break;

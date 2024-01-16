@@ -127,11 +127,10 @@ MonoBehaviour:
   baseDamage: 100
   damage: 100
   maxHealth: 700
-  health: 700
+  health: 200
   baseDefense: 0.95
   defense: 0.95
   healthSlider: {fileID: 2219052680242737000}
-  popup: {fileID: 7535240101782218078, guid: d993dc613a33da445ad5279fdc1923a9, type: 3}
   debuffMultiplier: 1.5
 --- !u!1 &4493585933242724545
 GameObject:

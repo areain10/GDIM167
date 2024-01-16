@@ -35,7 +35,7 @@ public class Character : MonoBehaviour
     {
         int dmgtakenRounded = Mathf.RoundToInt(dmg * defense);
         health -= dmgtakenRounded;
-        DmgPopup.Create(transform.position, dmgtakenRounded);
+        DmgPopup.Create(transform.position, dmgtakenRounded,specialTypes.DAMAGE);
         healthSlider.value = health;
 
         if (health <= 0 )
@@ -48,7 +48,7 @@ public class Character : MonoBehaviour
     public void heal(int healing)
     {
         health += healing;
-        
+        DmgPopup.Create(transform.position, healing, specialTypes.HEAL);
         if (health >= maxHealth)
         {
             health = maxHealth;

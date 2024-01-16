@@ -6,7 +6,7 @@ public class TestDmgPop : MonoBehaviour
 {
     private void Start()
     {
-        DmgPopup.Create(Vector3.zero, 300);
+       
     }
 
 
