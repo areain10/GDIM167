@@ -16,16 +16,12 @@ public class Character : MonoBehaviour
     public float baseDefense;
     public float defense;
     public Slider healthSlider;
-    public int turnsTillUlt;
-    public int ultTurnsNeeded;
-    public Slider ultimateSlider;
 
 
     private void Start()
     {
         healthSlider.maxValue = maxHealth;
         healthSlider.value = health;
-
         damage = baseDamage;
 
     }
@@ -74,8 +70,4 @@ public class Character : MonoBehaviour
         defense = multiplier*defense;
     }
    
-    public void updateUltCharge(int amount)
-    {
-
-    }
 }
