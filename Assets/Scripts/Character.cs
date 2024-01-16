@@ -34,6 +34,7 @@ public class Character : MonoBehaviour
     {
         health -= Mathf.RoundToInt(dmg*defense);
         healthSlider.value = health;
+        DmgPopup.Create(Vector3.zero, dmg);
 
         if (health <= 0 )
         {

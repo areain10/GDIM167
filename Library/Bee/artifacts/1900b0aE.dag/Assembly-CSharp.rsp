@@ -389,7 +389,10 @@
 "Assets/Scripts/battleManager.cs"
 "Assets/Scripts/Character.cs"
 "Assets/Scripts/Debuffer.cs"
+"Assets/Scripts/DmgPopup.cs"
+"Assets/Scripts/GameAssets.cs"
 "Assets/Scripts/Healer.cs"
+"Assets/Scripts/TestDmgPop.cs"
 "Assets/Scripts/Warrior.cs"
 -langversion:9.0
 
