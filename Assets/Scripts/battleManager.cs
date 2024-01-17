@@ -146,8 +146,6 @@ public class battleManager : MonoBehaviour
 
     void Targeting()
     {
-        
-        
         if(typeOfAttack == 2 && specials == specialTypes.HEAL)
         {
             StartCoroutine(targettingCamera(playerCharacter[target].transform.position + targetCamOffset.position));
@@ -163,26 +161,33 @@ public class battleManager : MonoBehaviour
     }
     public void OnNextTargetButton()
     {
+        
         if (state != battleState.TARGETTING)
         {
             return ;
         }
         int temp = target + 1;
-        if (temp < enemyCharacter.Count)
-        {
-            target = temp;
-        }
         
         if (typeOfAttack == 2 && specials == specialTypes.HEAL)
         {
+            if (temp < playerCharacter.Count)
+            {
+                target = temp;
+            }
             StartCoroutine(targettingCamera(playerCharacter[target].transform.position + targetCamOffset.position));
             battleStatusText.text = "Targetting " + playerCharacter[target].name.ToString();
+            
         }
         else
         {
+            if (temp < enemyCharacter.Count)
+            {
+                target = temp;
+            }
             StartCoroutine(targettingCamera(enemyCharacter[target].transform.position + targetCamOffset.position));
 
             battleStatusText.text = "Targetting " + enemyCharacter[target].name.ToString();
+            
 
         }
     }
@@ -194,20 +199,27 @@ public class battleManager : MonoBehaviour
             return;
         }
         int temp = target - 1;
-        if (temp >=0)
-        {
-            target = temp;
-        }
+        
         battleStatusText.text = "Targetting " + enemyCharacter[target].name.ToString();
         if (typeOfAttack == 2 && specials == specialTypes.HEAL)
         {
+            if (temp < playerCharacter.Count)
+            {
+                target = temp;
+            }
             StartCoroutine(targettingCamera(playerCharacter[target].transform.position + targetCamOffset.position));
             battleStatusText.text = "Targetting " + playerCharacter[target].name.ToString();
+            
         }
         else
         {
+            if (temp < enemyCharacter.Count)
+            {
+                target = temp;
+            }
             StartCoroutine(targettingCamera(enemyCharacter[target].transform.position + targetCamOffset.position));
             battleStatusText.text = "Targetting " + enemyCharacter[target].name.ToString();
+            
         }
     }
     public void OnConfirmAttackButton()
@@ -241,7 +253,11 @@ public class battleManager : MonoBehaviour
         targettingUI.gameObject.SetActive(false);
         bool isdead = false;
         tempPlayer = playerCharacter[currentCharacter];
-        tempEnemy = enemyCharacter[enemy];
+        if ( enemy < enemyCharacter.Count)
+        {
+            tempEnemy = enemyCharacter[enemy];
+        }
+        
         switch (attack)
         {
             case 1: isdead = tempEnemy.takeDamage(tempPlayer.damage,tempPlayer.getElementTypeNormal()); battleStatusText.text = "Player attacks " + attack.ToString(); break;

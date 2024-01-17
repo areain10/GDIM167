@@ -122,16 +122,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b10f0653363c2946859513a757ded80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CharacterName: Zero Byte
   specialType: 5
-  unitLevel: 0
-  baseDamage: 80
-  damage: 80
-  maxHealth: 500
-  health: 500
-  baseDefense: 0.6
-  defense: 0.6
+  elementalType: 3
+  baseDamage: 180
+  damage: 180
+  maxHealth: 700
+  health: 700
+  baseDefense: 80
+  defense: 80
   healthSlider: {fileID: 2219052680242737000}
-  popup: {fileID: 7535240101782218078, guid: d993dc613a33da445ad5279fdc1923a9, type: 3}
   Healing: 500
 --- !u!1 &5116300564698700713
 GameObject:

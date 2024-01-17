@@ -18,9 +18,10 @@ public class Character : MonoBehaviour
     public float baseDefense;
     public float defense;
     public Slider healthSlider;
-    
 
-    
+    float effective = 1.2f;
+    float ineffective = 0.8f;
+
     private void Start()
     {
         healthSlider.maxValue = maxHealth;
@@ -48,10 +49,17 @@ public class Character : MonoBehaviour
     public bool takeDamage(int dmg,elements dmgElement)
     {
         int dmgtakenRounded = Mathf.RoundToInt(dmg -(defense * dmgMultiplier(elementalType,dmgElement)));
+        
         health -= dmgtakenRounded;
         DmgPopup.Create(transform.position, dmgtakenRounded,specialTypes.DAMAGE);
         healthSlider.value = health;
+        switch (dmgMultiplier(elementalType, dmgElement))
+        {
+            case 1.2f: DmgPopup.Effective(transform.position, "INEFFECTIVE"); break;
+            case 0.8f: DmgPopup.Effective(transform.position, "EFFECTIVE"); break;
+            default: break;
 
+        }
         if (health <= 0 )
         {
             return true;
@@ -89,16 +97,17 @@ public class Character : MonoBehaviour
    
     public float dmgMultiplier(elements victimElement,elements instigatorElement)
     {
+        
         switch(victimElement)
         {
             case elements.ELECTRIC:
                 if(instigatorElement == elements.WATER)
                 {
-                    return 1.5f;
+                    return effective;
                 }
                 else if(instigatorElement == elements.EMP)
                 {
-                    return 0.5f;
+                    return ineffective;
                 }
                 else
                 {
@@ -108,11 +117,11 @@ public class Character : MonoBehaviour
             case elements.WATER:
                 if (instigatorElement == elements.FIRE)
                 {
-                    return 1.5f;
+                    return effective;
                 }
                 else if (instigatorElement == elements.ELECTRIC)
                 {
-                    return 0.5f;
+                    return ineffective;
                 }
                 else
                 {
@@ -121,11 +130,11 @@ public class Character : MonoBehaviour
             case elements.FIRE:
                 if (instigatorElement == elements.TOXIC)
                 {
-                    return 1.5f;
+                    return effective;
                 }
                 else if (instigatorElement == elements.WATER)
                 {
-                    return 0.5f;
+                    return ineffective;
                 }
                 else
                 {
@@ -134,11 +143,11 @@ public class Character : MonoBehaviour
             case elements.TOXIC:
                 if (instigatorElement == elements.NANITES)
                 {
-                    return 1.5f;
+                    return effective;
                 }
                 else if (instigatorElement == elements.FIRE)
                 {
-                    return 0.5f;
+                    return ineffective;
                 }
                 else
                 {
@@ -147,11 +156,11 @@ public class Character : MonoBehaviour
             case elements.NANITES:
                 if (instigatorElement == elements.EMP)
                 {
-                    return 1.5f;
+                    return effective;
                 }
                 else if (instigatorElement == elements.TOXIC)
                 {
-                    return 0.5f;
+                    return ineffective;
                 }
                 else
                 {
@@ -160,16 +169,20 @@ public class Character : MonoBehaviour
             case elements.EMP:
                 if (instigatorElement == elements.ELECTRIC)
                 {
-                    return 1.5f;
+                    return effective;
                 }
                 else if (instigatorElement == elements.NANITES)
                 {
-                    return 0.5f;
+                    return ineffective;
                 }
                 else
                 {
                     return 1f;
                 }
+            case elements.PHYSICAL:
+            
+                return 1f;
+            
         }
         return 0f;
     }

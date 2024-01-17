@@ -123,16 +123,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 531da0ee874eaaf4c8d034570c87d482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CharacterName: Inferno CyberShade
   specialType: 0
-  unitLevel: 0
-  baseDamage: 150
-  damage: 150
-  maxHealth: 1000
-  health: 1000
-  baseDefense: 0.8
-  defense: 0.8
+  elementalType: 2
+  baseDamage: 180
+  damage: 180
+  maxHealth: 850
+  health: 850
+  baseDefense: 100
+  defense: 100
   healthSlider: {fileID: 2219052680242737000}
-  popup: {fileID: 7535240101782218078, guid: d993dc613a33da445ad5279fdc1923a9, type: 3}
   specialDmg: 300
 --- !u!1 &4387810791580655319
 GameObject:

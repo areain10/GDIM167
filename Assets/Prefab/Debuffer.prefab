@@ -122,16 +122,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b698ec53e2033d4f9e9a55e170df557, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CharacterName: RAIDEN RENEGADE
   specialType: 3
-  unitLevel: 0
-  baseDamage: 100
-  damage: 100
-  maxHealth: 700
-  health: 700
-  baseDefense: 0.95
-  defense: 0.95
+  elementalType: 3
+  baseDamage: 160
+  damage: 160
+  maxHealth: 900
+  health: 900
+  baseDefense: 120
+  defense: 120
   healthSlider: {fileID: 2219052680242737000}
-  debuffMultiplier: 1.5
+  debuffMultiplier: 0.6
 --- !u!1 &4493585933242724545
 GameObject:
   m_ObjectHideFlags: 0
