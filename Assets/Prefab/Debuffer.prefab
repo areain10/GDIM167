@@ -127,7 +127,7 @@ MonoBehaviour:
   baseDamage: 100
   damage: 100
   maxHealth: 700
-  health: 200
+  health: 700
   baseDefense: 0.95
   defense: 0.95
   healthSlider: {fileID: 2219052680242737000}

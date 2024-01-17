@@ -778,31 +778,32 @@ MonoBehaviour:
   - {fileID: 2233528875635059601, guid: 22ceba04199a96f45b3adb9eed01d233, type: 3}
   - {fileID: 2233528875635059601, guid: 32fff394510ab294389156401bbe5fd2, type: 3}
   - {fileID: 2233528875635059601, guid: 2e48b37c079893f4e9d1492d0814d4ac, type: 3}
-  enemy:
-  - {fileID: 2233528875635059601, guid: 32fff394510ab294389156401bbe5fd2, type: 3}
-  - {fileID: 2233528875635059601, guid: 32fff394510ab294389156401bbe5fd2, type: 3}
-  - {fileID: 2233528875635059601, guid: 32fff394510ab294389156401bbe5fd2, type: 3}
-  state: 0
-  specials: 0
   playerSpawn:
   - {fileID: 257410876}
   - {fileID: 1004364378}
   - {fileID: 300151317}
+  enemy:
+  - {fileID: 2233528875635059601, guid: 32fff394510ab294389156401bbe5fd2, type: 3}
+  - {fileID: 2233528875635059601, guid: 22ceba04199a96f45b3adb9eed01d233, type: 3}
+  - {fileID: 2233528875635059601, guid: 32fff394510ab294389156401bbe5fd2, type: 3}
   enemySpawn:
   - {fileID: 2033886993}
   - {fileID: 1366466328}
   - {fileID: 463061299}
   currentCharacter: 0
+  state: 0
+  specials: 0
   maxEnergy: 5
   team1Energy: 1
   team2Energy: 1
-  team1EnergySlider: {fileID: 598032054}
-  battleStatusText: {fileID: 1348316842}
   mainCamera: {fileID: 963194227}
   ogCamPos: {fileID: 33246645}
   targetCamOffset: {fileID: 838057696}
+  playerCamOffset: {fileID: 1259121286}
   playerUI: {fileID: 1778434489}
   targettingUI: {fileID: 270687256}
+  team1EnergySlider: {fileID: 598032054}
+  battleStatusText: {fileID: 1348316842}
 --- !u!4 &456512909
 Transform:
   m_ObjectHideFlags: 0
@@ -1805,6 +1806,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1254968682}
   m_CullTransparentMesh: 1
+--- !u!1 &1259121285
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1259121286}
+  m_Layer: 0
+  m_Name: CharacterOffsetCam
+  m_TagString: Untagged
+  m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1259121286
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1259121285}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.36, y: 0.97, z: -2.94}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1294573603
 GameObject:
   m_ObjectHideFlags: 0
@@ -2733,3 +2765,4 @@ SceneRoots:
   - {fileID: 33246645}
   - {fileID: 650920450}
   - {fileID: 838057696}
+  - {fileID: 1259121286}
