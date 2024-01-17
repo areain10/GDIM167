@@ -16,12 +16,14 @@ public class battleManager : MonoBehaviour
     public Transform[] playerSpawn;
     List<Character> playerCharacter = new List<Character>();
     private Character tempPlayer;
+    private Character currentPlayer;
 
     //Enemy Character
     public GameObject[] enemy;
     public Transform[] enemySpawn;
     List<Character> enemyCharacter = new List<Character>();
     private Character tempEnemy;
+    private Character currentEnemy;
 
 
     public int currentCharacter = 0;
@@ -98,8 +100,10 @@ public class battleManager : MonoBehaviour
 
     void PlayerTurn()
     {
+        currentPlayer = playerCharacter[currentCharacter];
         target = 0;
-        battleStatusText.text = player[currentCharacter].name.ToString() + "'s Turn";
+        battleStatusText.text = currentPlayer.name.ToString() + "'s Turn";
+        
         mainCamera.transform.position = playerSpawn[currentCharacter].transform.position + playerCamOffset.position;
         playerUI.gameObject.SetActive(true);
         targettingUI.gameObject.SetActive(false);
@@ -132,6 +136,7 @@ public class battleManager : MonoBehaviour
             return;
         }
         typeOfAttack = 2;
+        specials = currentPlayer.GetSpecialTypes();
         state = battleState.TARGETTING;
         Targeting();
 
@@ -141,8 +146,18 @@ public class battleManager : MonoBehaviour
 
     void Targeting()
     {
-        battleStatusText.text = "Targetting " + enemyCharacter[target].name.ToString();
-        StartCoroutine(targettingCamera());
+        
+        
+        if(typeOfAttack == 2 && specials == specialTypes.HEAL)
+        {
+            StartCoroutine(targettingCamera(playerCharacter[target].transform.position + targetCamOffset.position));
+            battleStatusText.text = "Targetting " + playerCharacter[target].name.ToString();
+        }
+        else
+        {
+            StartCoroutine(targettingCamera(enemyCharacter[target].transform.position + targetCamOffset.position));
+            battleStatusText.text = "Targetting " + enemyCharacter[target].name.ToString();
+        }
         playerUI.gameObject.SetActive(false);
         targettingUI.gameObject.SetActive(true);
     }
@@ -157,8 +172,19 @@ public class battleManager : MonoBehaviour
         {
             target = temp;
         }
-        battleStatusText.text = "Targetting " + enemyCharacter[target].name.ToString();
-        StartCoroutine(targettingCamera());
+        
+        if (typeOfAttack == 2 && specials == specialTypes.HEAL)
+        {
+            StartCoroutine(targettingCamera(playerCharacter[target].transform.position + targetCamOffset.position));
+            battleStatusText.text = "Targetting " + playerCharacter[target].name.ToString();
+        }
+        else
+        {
+            StartCoroutine(targettingCamera(enemyCharacter[target].transform.position + targetCamOffset.position));
+
+            battleStatusText.text = "Targetting " + enemyCharacter[target].name.ToString();
+
+        }
     }
 
     public void OnPreviousTargetButton()
@@ -173,7 +199,16 @@ public class battleManager : MonoBehaviour
             target = temp;
         }
         battleStatusText.text = "Targetting " + enemyCharacter[target].name.ToString();
-        StartCoroutine(targettingCamera());
+        if (typeOfAttack == 2 && specials == specialTypes.HEAL)
+        {
+            StartCoroutine(targettingCamera(playerCharacter[target].transform.position + targetCamOffset.position));
+            battleStatusText.text = "Targetting " + playerCharacter[target].name.ToString();
+        }
+        else
+        {
+            StartCoroutine(targettingCamera(enemyCharacter[target].transform.position + targetCamOffset.position));
+            battleStatusText.text = "Targetting " + enemyCharacter[target].name.ToString();
+        }
     }
     public void OnConfirmAttackButton()
     {
@@ -209,12 +244,12 @@ public class battleManager : MonoBehaviour
         tempEnemy = enemyCharacter[enemy];
         switch (attack)
         {
-            case 1: isdead = tempEnemy.takeDamage(tempPlayer.damage); battleStatusText.text = "Player attacks " + attack.ToString(); break;
+            case 1: isdead = tempEnemy.takeDamage(tempPlayer.damage,tempPlayer.getElementTypeNormal()); battleStatusText.text = "Player attacks " + attack.ToString(); break;
             case 2:
                 switch (playerCharacter[currentCharacter].GetSpecialTypes())
                 {
                     case specialTypes.DAMAGE:
-                        isdead = tempEnemy.takeDamage(tempPlayer.gameObject.GetComponent<Warrior>().specialDmg);
+                        isdead = tempEnemy.takeDamage(tempPlayer.gameObject.GetComponent<Warrior>().specialDmg, tempPlayer.getElementTypeSpecial());
                         battleStatusText.text = tempPlayer.name.ToString() + " Special Attacks " + tempEnemy.name.ToString();
                         break;
                     case specialTypes.DEBUFFDEFENSE:
@@ -222,22 +257,9 @@ public class battleManager : MonoBehaviour
                         battleStatusText.text = tempPlayer.name.ToString() + " debuff " + tempEnemy.name.ToString();
                         break;
                     case specialTypes.HEAL:
-                        float lowestHealth = 9999;
-                        int index = 0;
-                        for (int i = 0; i < playerCharacter.Count; i++)
-                        {
-                            float healthratio = playerCharacter[i].health / playerCharacter[i].maxHealth;
-                            if (healthratio < lowestHealth)
-                            {
-
-                                lowestHealth = healthratio;
-                                Debug.Log(lowestHealth);
-                                index = i;
-                            }
-                        }
-                        mainCamera.transform.position = playerSpawn[index].transform.GetChild(0).transform.position;
-                        playerCharacter[index].heal(tempPlayer.gameObject.GetComponent<Healer>().Healing);
-                        battleStatusText.text = tempPlayer.name.ToString() + " heals " + playerCharacter[index].ToString();
+                        
+                        playerCharacter[target].heal(tempPlayer.gameObject.GetComponent<Healer>().Healing);
+                        battleStatusText.text = tempPlayer.name.ToString() + " heals " + playerCharacter[target].ToString();
                         break;
                 }
                 break;
@@ -298,12 +320,12 @@ public class battleManager : MonoBehaviour
         tempPlayer = playerCharacter[player];
         switch (attack)
         {
-            case 1: isdead = tempPlayer.takeDamage(tempEnemy.damage); battleStatusText.text = tempEnemy.name.ToString() + "attacks " + playerCharacter[player].ToString(); break;
+            case 1: isdead = tempPlayer.takeDamage(tempEnemy.damage,tempEnemy.getElementTypeNormal()); battleStatusText.text = tempEnemy.name.ToString() + "attacks " + playerCharacter[player].ToString(); break;
             case 2:
                 switch (tempEnemy.GetSpecialTypes())
                 {
                     case specialTypes.DAMAGE:
-                        isdead = tempPlayer.takeDamage(tempEnemy.gameObject.GetComponent<Warrior>().specialDmg);
+                        isdead = tempPlayer.takeDamage(tempEnemy.gameObject.GetComponent<Warrior>().specialDmg, tempEnemy.getElementTypeSpecial());
                         battleStatusText.text = tempEnemy.name.ToString() + " Special Attacks " + tempPlayer.name.ToString();
                         break;
                     case specialTypes.DEBUFFDEFENSE:
@@ -381,12 +403,11 @@ public class battleManager : MonoBehaviour
         team1EnergySlider.value = team1Energy;
     }
 
-    IEnumerator targettingCamera()
+    IEnumerator targettingCamera(Vector3 destination)
     {
         float totalMovementTime = 0.5f;
         float currentMovementTime = 0f;
         Vector3 startPos = mainCamera.transform.position;
-        Vector3 destination = enemyCharacter[target].transform.position + targetCamOffset.position;
         while (currentMovementTime<= 1)
         {
             currentMovementTime += Time.deltaTime/totalMovementTime;
