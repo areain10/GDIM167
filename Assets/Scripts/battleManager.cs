@@ -76,6 +76,7 @@ public class battleManager : MonoBehaviour
     IEnumerator BattleSetup()
     {
         battleStatusText.text = "Setting up Battle";
+        // populate playerCharacter and enemyCharacter lists
         for (int i = 0; i < player.Length; i++)
         {
             GameObject playerGO = Instantiate(player[i], playerSpawn[i]);
@@ -100,10 +101,11 @@ public class battleManager : MonoBehaviour
 
     void PlayerTurn()
     {
+        //initialise variables
         currentPlayer = playerCharacter[currentCharacter];
         target = 0;
         battleStatusText.text = currentPlayer.name.ToString() + "'s Turn";
-        
+        //ui and camera
         mainCamera.transform.position = playerSpawn[currentCharacter].transform.position + playerCamOffset.position;
         playerUI.gameObject.SetActive(true);
         targettingUI.gameObject.SetActive(false);
@@ -115,11 +117,13 @@ public class battleManager : MonoBehaviour
     /*----------Buttons----------*/
     public void OnAttackButton()
     {
+        //check if player turn
         if(state != battleState.PLAYERTURN)
         {
             Debug.Log("Not player turn");
             return;
         }
+        //change states and starts targetting
         typeOfAttack = 1;
         state = battleState.TARGETTING;
         Targeting();
@@ -130,11 +134,13 @@ public class battleManager : MonoBehaviour
 
     public void OnSpecialButton()
     {
+        //check if enough energy and if players turn
         if (state != battleState.PLAYERTURN | manageEnergy(team1Energy, -1) == -1)
         {
             Debug.Log("Not player turn");
             return;
         }
+        //change states, targetting
         typeOfAttack = 2;
         specials = currentPlayer.GetSpecialTypes();
         state = battleState.TARGETTING;
@@ -146,6 +152,7 @@ public class battleManager : MonoBehaviour
 
     void Targeting()
     {
+        //either target friendly or enemy depending on types of attacks
         if(typeOfAttack == 2 && specials == specialTypes.HEAL)
         {
             StartCoroutine(targettingCamera(playerCharacter[target].transform.position + targetCamOffset.position));
@@ -250,6 +257,7 @@ public class battleManager : MonoBehaviour
     /*----------Player Attack*----------*/
     IEnumerator PlayerAttack(int attack, int enemy)
     {
+        //attack is type of attack 1 is normal 2 is special, enemy is the index of target enemy
         targettingUI.gameObject.SetActive(false);
         bool isdead = false;
         tempPlayer = playerCharacter[currentCharacter];
@@ -330,6 +338,7 @@ public class battleManager : MonoBehaviour
 
     IEnumerator EnemyAttack(int attack, int player)
     {
+        //attack is what type of attack, player is the index of the player target
         Debug.Log("Attack:" + attack + " Player: " + 1);
         bool isdead = false;
         tempEnemy = enemyCharacter[currentCharacter];
